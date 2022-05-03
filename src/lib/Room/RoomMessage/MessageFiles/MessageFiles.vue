@@ -45,6 +45,7 @@
 		</div>
 
 		<format-message
+			:message="message"
 			:content="message.content"
 			:users="roomUsers"
 			:text-formatting="textFormatting"

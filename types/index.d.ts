@@ -58,6 +58,7 @@ export interface MessageReactions {
 
 export interface Message {
 	_id: StringNumber
+	t?: string
 	indexId?: StringNumber
 	content: string
 	senderId: StringNumber

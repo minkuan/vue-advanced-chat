@@ -49,6 +49,7 @@
 
 		<div class="vac-reply-content">
 			<format-message
+				:message="message"
 				:content="message.replyMessage.content"
 				:users="roomUsers"
 				:text-formatting="textFormatting"

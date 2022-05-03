@@ -2,7 +2,10 @@
 	<div
 		v-show="showRoomsList"
 		class="vac-rooms-container"
-		:class="{ 'vac-rooms-container-full': isMobile, 'vac-app-border-r': !isMobile }"
+		:class="{
+			'vac-rooms-container-full': isMobile,
+			'vac-app-border-r': !isMobile
+		}"
 	>
 		<slot name="rooms-header" />
 

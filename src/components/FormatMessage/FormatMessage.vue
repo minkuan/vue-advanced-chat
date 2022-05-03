@@ -3,57 +3,66 @@
 		class="vac-format-message-wrapper"
 		:class="{ 'vac-text-ellipsis': singleLine }"
 	>
-		<div
-			v-if="!textFormatting.disabled"
-			:class="{ 'vac-text-ellipsis': singleLine }"
-		>
-			<div
-				v-for="(message, i) in linkifiedMessage"
-				:key="i"
-				class="vac-format-container"
-			>
-				<component
-					:is="message.url ? 'a' : 'span'"
-					:class="{
-						'vac-text-ellipsis': singleLine,
-						'vac-text-bold': message.bold,
-						'vac-text-italic': deleted || message.italic,
-						'vac-text-strike': message.strike,
-						'vac-text-underline': message.underline,
-						'vac-text-inline-code': !singleLine && message.inline,
-						'vac-text-multiline-code': !singleLine && message.multiline,
-						'vac-text-tag': !singleLine && !reply && message.tag
-					}"
-					:href="message.href"
-					:target="message.href ? linkOptions.target : null"
-					:rel="message.href ? linkOptions.rel : null"
-					@click="openTag(message)"
-				>
-					<slot name="deleted-icon" v-bind="{ deleted }">
-						<svg-icon v-if="deleted" name="deleted" class="vac-icon-deleted" />
-					</slot>
-					<template v-if="message.url && message.image">
-						<div class="vac-image-link-container">
-							<div
-								class="vac-image-link"
-								:style="{
-									'background-image': `url('${message.value}')`,
-									height: message.height
-								}"
-							/>
-						</div>
-						<div class="vac-image-link-message">
-							<span>{{ message.value }}</span>
-						</div>
-					</template>
-					<template v-else>
-						<span>{{ message.value }}</span>
-					</template>
-				</component>
-			</div>
-		</div>
+		<div v-if="message.t">
+{{ message.t }}<svg-icon name="call_end" />
+</div>
 		<div v-else>
-			{{ formattedContent }}
+			<div
+				v-if="!textFormatting.disabled"
+				:class="{ 'vac-text-ellipsis': singleLine }"
+			>
+				<div
+					v-for="(lmessage, i) in linkifiedMessage"
+					:key="i"
+					class="vac-format-container"
+				>
+					<component
+						:is="lmessage.url ? 'a' : 'span'"
+						:class="{
+							'vac-text-ellipsis': singleLine,
+							'vac-text-bold': lmessage.bold,
+							'vac-text-italic': deleted || lmessage.italic,
+							'vac-text-strike': lmessage.strike,
+							'vac-text-underline': lmessage.underline,
+							'vac-text-inline-code': !singleLine && lmessage.inline,
+							'vac-text-multiline-code': !singleLine && lmessage.multiline,
+							'vac-text-tag': !singleLine && !reply && lmessage.tag
+						}"
+						:href="lmessage.href"
+						:target="lmessage.href ? linkOptions.target : null"
+						:rel="lmessage.href ? linkOptions.rel : null"
+						@click="openTag(lmessage)"
+					>
+						<slot name="deleted-icon" v-bind="{ deleted }">
+							<svg-icon
+								v-if="deleted"
+								name="deleted"
+								class="vac-icon-deleted"
+							/>
+						</slot>
+						<template v-if="lmessage.url && lmessage.image">
+							<div class="vac-image-link-container">
+								<div
+									class="vac-image-link"
+									:style="{
+										'background-image': `url('${lmessage.value}')`,
+										height: lmessage.height
+									}"
+								/>
+							</div>
+							<div class="vac-image-link-message">
+								<span>{{ lmessage.value }}</span>
+							</div>
+						</template>
+						<template v-else>
+							<span>{{ lmessage.value }}</span>
+						</template>
+					</component>
+				</div>
+			</div>
+			<div v-else>
+				{{ formattedContent }}
+			</div>
 		</div>
 	</div>
 </template>
@@ -69,6 +78,7 @@ export default {
 	components: { SvgIcon },
 
 	props: {
+		message: { type: Object, required: true },
 		content: { type: [String, Number], required: true },
 		deleted: { type: Boolean, default: false },
 		users: { type: Array, default: () => [] },

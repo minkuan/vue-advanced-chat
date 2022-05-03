@@ -53,6 +53,7 @@
 					</div>
 					<format-message
 						v-else-if="room.lastMessage"
+						:message="room.lastMessage"
 						:content="getLastMessage"
 						:deleted="!!room.lastMessage.deleted && !typingUsers"
 						:users="room.users"

@@ -10,6 +10,7 @@
 
 		<div v-if="message.system" class="vac-card-info vac-card-system">
 			<format-message
+				:message="message"
 				:content="message.content"
 				:users="roomUsers"
 				:text-formatting="textFormatting"
@@ -87,6 +88,7 @@
 
 						<format-message
 							v-else-if="!message.files || !message.files.length"
+							:message="message"
 							:content="message.content"
 							:users="roomUsers"
 							:text-formatting="textFormatting"
@@ -192,8 +194,8 @@
 						@click="$emit('open-failed-message', { message })"
 					>
 						<div class="vac-failure-text">
-							!
-						</div>
+!
+</div>
 					</div>
 				</slot>
 				<div
@@ -357,6 +359,7 @@ export default {
 	},
 
 	mounted() {
+		console.log('RoomMessage.vue...message=', this.message)
 		messagesValidation(this.message)
 
 		this.$emit('message-added', {
